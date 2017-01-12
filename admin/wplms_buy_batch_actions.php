@@ -78,7 +78,42 @@ class Wplms_Buy_Batch_Actions{
 	}
 
 	function create_batch_on_order_completion($order_id){
-		
+		$order = new WC_Order( $order_id );
+
+		$items = $order->get_items();
+		$user_id = $order->user_id;
+
+		foreach($items as $item){
+			$batch_info = get_post_meta($item['product_id'],'wplms_buy_batch_information',true);
+			if(!empty($batch_info)){
+				$batch_name = $batch_info['batch_name'];
+				$courses = $batch_info['batch_courses'];
+				$batch_seats = $batch_info['batch_seats'];
+
+				$group_settings = array(
+				        'creator_id' => $user_id,
+				        'name' => $batch_name,
+				        'status' => 'private',
+				        'date_created' => current_time('mysql')
+				    );
+
+				/* Create group/batch */
+				$group_id = groups_create_group( $group_settings);
+
+				if(is_numeric($group_id)){
+
+					groups_update_groupmeta( $group_id, 'total_member_count', 1 );
+					groups_update_groupmeta( $group_id, 'last_activity', gmdate( "Y-m-d H:i:s" ) );
+					groups_update_groupmeta( $group_id, 'course_batch',1);
+					foreach ($courses as $course_id) {
+					    groups_add_groupmeta($group_id,'batch_course',$course_id);
+					}
+					groups_update_groupmeta( $group_id, 'enable_seats', 1 );
+					groups_update_groupmeta( $group_id, 'batch_seats',$batch_seats);
+					groups_update_groupmeta( $group_id, 'batch_exclusivity', 1 );
+				}
+			}
+		}
 	}
 
 } // End of class Wplms_Buy_Batches_Actions
