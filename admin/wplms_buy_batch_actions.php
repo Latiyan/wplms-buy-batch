@@ -113,6 +113,9 @@ class Wplms_Buy_Batch_Actions{
 					groups_update_groupmeta( $group_id, 'batch_exclusivity', 1 );
 				}
 			}
+
+			/* Delete product */
+			wp_delete_post($item['product_id'],true);
 		}
 	}
 
