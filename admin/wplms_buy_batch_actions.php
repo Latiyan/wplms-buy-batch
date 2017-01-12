@@ -26,7 +26,8 @@ class Wplms_Buy_Batch_Actions{
 	private function __construct(){
 
 		add_action('wp_ajax_buy_wplms_batch',array($this,'buy_wplms_batch'));
-		
+		add_action('woocommerce_order_status_completed',array($this,'create_batch_on_order_completion'));
+
 	} // END public function __construct
 
 	function buy_wplms_batch(){
@@ -35,53 +36,49 @@ class Wplms_Buy_Batch_Actions{
 			$batch_name = $_POST['batch_name'];
 			$courses = $_POST['batch_courses'];
 			$batch_seats = $_POST['batch_seats'];
-			$user_id = get_current_user_id();
 
-			$group_settings = array(
-	            'creator_id' => $user_id,
-	            'name' => $batch_name,
-	            'status' => 'private',
-	            'date_created' => current_time('mysql')
-	        );
+            /* Creat product */
+            $post_args = array('post_type' => 'product','post_status'=>'publish','post_title'=>$batch_name);
+	        $product_id = wp_insert_post($post_args);
 
-	        /* Create group/batch */
-	        $group_id = groups_create_group( $group_settings);
+	        /* Product Price */
+	        $product_price = 0;
+        	foreach ($courses as $course_id) {
+        		$price_per_seat = get_post_meta($course_id,'wplms_price_per_batch_seat',true);
+        		if(!empty($price_per_seat)){
+        			$price = $price_per_seat*$batch_seats;
+        			$product_price += $price;
+        		}
+        	}
+	        update_post_meta($product_id,'_price', $product_price);
 
-	        if(is_numeric($group_id)){
+	        /* Product Settings */
+	        wp_set_object_terms($product_id, 'simple', 'product_type');
+	        update_post_meta($product_id,'_visibility','hidden');
+	        update_post_meta($product_id,'_virtual','yes');
+	        update_post_meta($product_id,'_downloadable','yes');
+	        update_post_meta($product_id,'_sold_individually','yes');
+	        update_post_meta($product_id,'_stock_status','instock');
 
-	        	/* Add batch settings */
-	        	groups_update_groupmeta( $group_id, 'total_member_count', 1 );
-            	groups_update_groupmeta( $group_id, 'last_activity', gmdate( "Y-m-d H:i:s" ) );
-            	groups_update_groupmeta( $group_id, 'course_batch',1);
-            	foreach ($courses as $course_id) {
-            		groups_add_groupmeta($group_id,'batch_course',$course_id);
-            	}
-            	groups_update_groupmeta( $group_id, 'enable_seats', 1 );
-            	groups_update_groupmeta( $group_id, 'batch_seats',$batch_seats);
-            	groups_update_groupmeta( $group_id, 'batch_exclusivity', 1 );
+	        /* Add Batch information in product meta */
+	        $batch_info = array(
+	        		'batch_name' => $batch_name,
+	        		'batch_courses' => $courses,
+	        		'batch_seats' => $batch_seats
+	        	);
+	        update_post_meta($product_id,'wplms_buy_batch_information',$batch_info);
 
-            	/* Creat product */
-            	$this->create_product($batch_name);
-	        }
+	        /* Redirect user to cart page on ajax success */
+	        global $woocommerce;
+	        $cart_url = $woocommerce->cart->get_cart_url();
+	        $cart_url = $cart_url.'?add-to-cart='.$product_id;
+
+	        echo $cart_url;
 		}
 	}
 
-	function create_product($batch_name){
-
-		$post_args = array('post_type' => 'product','post_status'=>'publish','post_title'=>$batch_name);
-        $product_id = wp_insert_post($post_args);
-
-        /* Product Price */
-        update_post_meta($product_id,'_price', );
-
-        wp_set_object_terms($product_id, 'simple', 'product_type');
-        update_post_meta($product_id,'_visibility','visible');
-        update_post_meta($product_id,'_virtual','yes');
-        update_post_meta($product_id,'_downloadable','yes');
-        update_post_meta($product_id,'_sold_individually','yes');
-
-        /* Product Stock */
-        update_post_meta($product_id,'_manage_stock','yes');
+	function create_batch_on_order_completion($order_id){
+		
 	}
 
 } // End of class Wplms_Buy_Batches_Actions
