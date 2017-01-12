@@ -21,6 +21,8 @@ You should have received a copy of the GNU General Public License along with WPL
 
 
 include_once 'admin/wplms_buy_batch_class.php';
+include_once 'admin/wplms_buy_batch_actions.php';
+include_once 'admin/wplms_buy_batch_filters.php';
 
 add_action('plugins_loaded','wplms_buy_batch_translations');
 function wplms_buy_batch_translations(){
