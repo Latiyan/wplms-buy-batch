@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
                   },
             cache: false,
             success: function (html) {
-
+                  window.location.href = html;
             }
         });
 	});
