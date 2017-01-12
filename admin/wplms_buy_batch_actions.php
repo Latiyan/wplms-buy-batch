@@ -57,8 +57,29 @@ class Wplms_Buy_Batch_Actions{
             	groups_update_groupmeta( $group_id, 'enable_seats', 1 );
             	groups_update_groupmeta( $group_id, 'batch_seats',$batch_seats);
             	groups_update_groupmeta( $group_id, 'batch_exclusivity', 1 );
+
+            	/* Creat product */
+            	$this->create_product($batch_name);
 	        }
 		}
+	}
+
+	function create_product($batch_name){
+
+		$post_args = array('post_type' => 'product','post_status'=>'publish','post_title'=>$batch_name);
+        $product_id = wp_insert_post($post_args);
+
+        /* Product Price */
+        update_post_meta($product_id,'_price', );
+
+        wp_set_object_terms($product_id, 'simple', 'product_type');
+        update_post_meta($product_id,'_visibility','visible');
+        update_post_meta($product_id,'_virtual','yes');
+        update_post_meta($product_id,'_downloadable','yes');
+        update_post_meta($product_id,'_sold_individually','yes');
+
+        /* Product Stock */
+        update_post_meta($product_id,'_manage_stock','yes');
 	}
 
 } // End of class Wplms_Buy_Batches_Actions
