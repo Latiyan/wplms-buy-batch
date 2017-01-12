@@ -24,7 +24,9 @@ class Wplms_Buy_Batch_Actions{
 	}
 
 	private function __construct(){
+
 		add_action('wp_ajax_buy_wplms_batch',array($this,'buy_wplms_batch'));
+		
 	} // END public function __construct
 
 	function buy_wplms_batch(){
