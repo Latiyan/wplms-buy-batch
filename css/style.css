@@ -1,0 +1,4 @@
+.course_label {margin-top:25px;}
+.wplms_buy_batch_form label {width:20%;}
+.batch_name {width:40%;}
+.wplms_buy_batch_form span .batch_courses+span {width: 40% !important;position: absolute;top: 45px;left: 228px;}
