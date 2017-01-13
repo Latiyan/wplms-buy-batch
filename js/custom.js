@@ -1,12 +1,12 @@
 jQuery(document).ready(function($){
 
-	$('#wplms_buy_batch').on('click',function(){
+      $('#wplms_buy_batch').on('click',function(){
+            // Change Button Text
             $(this).text('.....');
+
+            // Define Variables
 		var batch_name = $('.wplms_buy_batch_form').find('.batch_name').val();
 		var batch_courses = $('.wplms_buy_batch_form').find('.batch_courses').val();
-		if(batch_courses == 'undefined'){
-                  batch_courses = $('.wplms_buy_batch_form').find('.batch_courses').attr('data-ids');
-            }
             var batch_seats = $('.wplms_buy_batch_form').find('.batch_seats').val();
 		if(batch_seats == 'undefined'){
                   batch_seats = $('.wplms_buy_batch_form').find('.batch_seats').attr('data-seats');
@@ -14,6 +14,7 @@ jQuery(document).ready(function($){
             var batch_status = $('.wplms_buy_batch_form').find('.batch_status').attr('data-status');
             var buy_batch = $('.wplms_buy_batch_form').find('.buy_batch').attr('data-batch');
 
+            // Ajax Call
             $.ajax({
             type: "POST",
             url: ajaxurl,
