@@ -33,9 +33,16 @@ class Wplms_Buy_Batch_Actions{
 	function buy_wplms_batch(){
 		if(isset($_POST['batch_name']) && isset($_POST['batch_seats']) && isset($_POST['batch_courses'])){
 
+			/* Define Variables */
 			$batch_name = $_POST['batch_name'];
-			$courses = $_POST['batch_courses'];
+			if(is_array($_POST['batch_courses'])){
+				$courses = $_POST['batch_courses'];
+			}else{
+				$courses = explode(',',$_POST['batch_courses']);
+			}
 			$batch_seats = $_POST['batch_seats'];
+			$batch_status = $_POST['batch_status'];
+			$buy_batch = $_POST['buy_batch'];
 
             /* Creat product */
             $post_args = array('post_type' => 'product','post_status'=>'publish','post_title'=>$batch_name);
@@ -64,7 +71,9 @@ class Wplms_Buy_Batch_Actions{
 	        $batch_info = array(
 	        		'batch_name' => $batch_name,
 	        		'batch_courses' => $courses,
-	        		'batch_seats' => $batch_seats
+	        		'batch_seats' => $batch_seats,
+	        		'batch_status' => $batch_status,
+	        		'buy_batch' => $buy_batch
 	        	);
 	        update_post_meta($product_id,'wplms_buy_batch_information',$batch_info);
 
@@ -74,6 +83,7 @@ class Wplms_Buy_Batch_Actions{
 	        $cart_url = $cart_url.'?add-to-cart='.$product_id;
 
 	        echo $cart_url;
+	        die();
 		}
 	}
 
@@ -89,11 +99,13 @@ class Wplms_Buy_Batch_Actions{
 				$batch_name = $batch_info['batch_name'];
 				$courses = $batch_info['batch_courses'];
 				$batch_seats = $batch_info['batch_seats'];
+				$batch_status = $batch_info['batch_status'];
+				$buy_batch = $batch_info['buy_batch'];
 
 				$group_settings = array(
 				        'creator_id' => $user_id,
 				        'name' => $batch_name,
-				        'status' => 'private',
+				        'status' => $batch_status,
 				        'date_created' => current_time('mysql')
 				    );
 
@@ -110,6 +122,8 @@ class Wplms_Buy_Batch_Actions{
 					}
 					groups_update_groupmeta( $group_id, 'enable_seats', 1 );
 					groups_update_groupmeta( $group_id, 'batch_seats',$batch_seats);
+					groups_update_groupmeta( $group_id, 'buy_batch', 1 );
+
 					groups_update_groupmeta( $group_id, 'batch_exclusivity', 1 );
 				}
 			}
@@ -120,3 +134,5 @@ class Wplms_Buy_Batch_Actions{
 	}
 
 } // End of class Wplms_Buy_Batches_Actions
+
+Wplms_Buy_Batch_Actions::init();
