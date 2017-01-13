@@ -45,8 +45,8 @@ class Wplms_Buy_Batch_Filters{
 	function add_price_per_batch_seat_frontend($settings){
 		$fields = $settings['course_settings']['fields'];
 		$arr = array(array(
-				'label'=> __('Price Per Batch Seats','wplms-bb' ),
-				'text'=>__('','wplms-bb' ),
+				'label'=> __('Batch Seat Price','wplms-bb' ),
+				'text'=>__('Price Per Batch Seats','wplms-bb' ),
 				'type'=> 'number',
 				'style'=>'',
 				'id' => 'wplms_price_per_batch_seat',
@@ -60,3 +60,5 @@ class Wplms_Buy_Batch_Filters{
 	}
 
 } // End of class Wplms_Buy_Batch_Filters
+
+Wplms_Buy_Batch_Filters::init();
