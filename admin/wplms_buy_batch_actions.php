@@ -35,11 +35,7 @@ class Wplms_Buy_Batch_Actions{
 
 			/* Define Variables */
 			$batch_name = $_POST['batch_name'];
-			if(is_array($_POST['batch_courses'])){
-				$courses = $_POST['batch_courses'];
-			}else{
-				$courses = explode(',',$_POST['batch_courses']);
-			}
+			$courses = $_POST['batch_courses'];
 			$batch_seats = $_POST['batch_seats'];
 			$batch_status = $_POST['batch_status'];
 			$buy_batch = $_POST['buy_batch'];
