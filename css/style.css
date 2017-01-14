@@ -1,4 +1,15 @@
-.course_label {margin-top:25px;}
+.course_label {position: absolute;margin-top: 10px;}
+.wplms_buy_batch_form li{list-style: none;}
 .wplms_buy_batch_form label {width:20%;}
 .batch_name {width:40%;}
-.wplms_buy_batch_form span .batch_courses+span {width: 40% !important;position: absolute;top: 45px;left: 228px;}
+.wplms_buy_batch_form span .batch_courses+span {
+	width: 40% !important;
+	left: 228px;
+}
+#wplms_buy_batch {left:228px;}
+.batch_price_li {
+	list-style:none;
+	color:#70c989;
+	font-size: 18px;
+	font-weight: 700;
+}
