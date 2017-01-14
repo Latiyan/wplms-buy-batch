@@ -1,5 +1,26 @@
 jQuery(document).ready(function($){
 
+	$('.batch_seats,.batch_courses').on('change',function(){
+            // Define Variables
+            var batch_seats = $('.wplms_buy_batch_form').find('.batch_seats').val();
+            var batch_courses = $('.wplms_buy_batch_form').find('.batch_courses').val();
+            var batch_price = 0;
+
+            // Calculate Pricee
+            $.each(batch_courses,function(k,v){
+                 var course_price = $('.batch_courses .price[value="'+v+'"]').attr('data-id');
+                 var price = batch_seats * course_price;
+                 batch_price += price;
+            });
+            
+            // Display Price
+            var currency_symbol = $('.wplms_buy_batch_form').find('.currency_symbol').text();
+            if( !$('.batch_price').length ){
+                  $('#wplms_buy_batch').before('<li class="batch_price_li"><label>Total Price</label><span class="batch_price"></span></li>');
+            }
+            $('.batch_price').text(currency_symbol+batch_price);
+      });
+
       $('#wplms_buy_batch').on('click',function(){
             // Change Button Text
             $(this).text('.....');
@@ -13,6 +34,9 @@ jQuery(document).ready(function($){
             }
             var batch_status = $('.wplms_buy_batch_form').find('.batch_status').attr('data-status');
             var buy_batch = $('.wplms_buy_batch_form').find('.buy_batch').attr('data-batch');
+
+            // Check Empty variable.
+
 
             // Ajax Call
             $.ajax({
