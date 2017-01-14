@@ -52,13 +52,13 @@ class WPLMS_Buy_Batch_Class{
 		<div class="wplms_buy_batch_form">
 			<form method="post">
 			<!-- Batch Name -->
-				<label><?php _e('Name: ','wplms-bb'); ?></label><span><input type="text" name="batch_name" class="batch_name" placeholder="<?php _e('Batch Name','wplms-bb'); ?>"></span></br>
+				<li><label><?php _e('Name: ','wplms-bb'); ?></label><span><input type="text" name="batch_name" class="batch_name" placeholder="<?php _e('Batch Name','wplms-bb'); ?>"></span></li></br>
 
 			<!-- Batch Courses -->
 				<?php
 				if(empty($atts['courses'])){
 					?>
-					<label class="course_label"><?php _e('Select Courses: ','wplms-bb'); ?></label>
+					<li><label class="course_label"><?php _e('Select Courses: ','wplms-bb'); ?></label>
 					<span>
 						<select name="batch_course[]" class="batch_courses form_field chosen" multiple>
 							<option value=""><?php _e('None','wplms-bb'); ?></option>
@@ -73,11 +73,11 @@ class WPLMS_Buy_Batch_Class{
 								}
 		                    ?>
 						</select>
-					</span></br>
+					</span></li></br>
 					<?php
 				}else{
 					?>
-					<label class="course_label"><?php _e('Courses: ','wplms-bb'); ?></label>
+					<li><label class="course_label"><?php _e('Courses: ','wplms-bb'); ?></label>
 
 					<span>
 						<select name="batch_course[]" class="batch_courses form_field chosen" multiple>
@@ -94,7 +94,7 @@ class WPLMS_Buy_Batch_Class{
 								}
 		                    ?>
 						</select>
-					</span></br>
+					</span></li></br>
 					<?php
 				}
 				?>
@@ -103,13 +103,20 @@ class WPLMS_Buy_Batch_Class{
 				<?php
 				if($atts['seats'] == 0){
 					?>
-					<label><?php _e('Select Batch Seats: ','wplms-bb'); ?></label><span><input type="number" name="batch_seats" class="batch_seats" placeholder="<?php _e('Batch seats','wplms-bb'); ?>"></span></br>
+					<li><label><?php _e('Select Batch Seats: ','wplms-bb'); ?></label><span><input type="number" name="batch_seats" class="batch_seats" placeholder="<?php _e('Batch seats','wplms-bb'); ?>"></span></li></br>
 					<?php
 				}else{
 					?>
-					<label><?php _e('Batch Seats: ','wplms-bb'); ?></label><span  class="batch_seats" data-seats="<?php echo $atts['seats']; ?>"><?php echo $atts['seats']; ?></span></br>
+					<li><label><?php _e('Batch Seats: ','wplms-bb'); ?></label><span  class="batch_seats" data-seats="<?php echo $atts['seats']; ?>"><?php echo $atts['seats']; ?></span></li></br>
 					<?php
 				}
+				?>
+
+			<!-- Check Woocommerce Currency Symbol -->
+				<?php
+				global  $woocommerce;
+   				$currency_symbol = get_woocommerce_currency_symbol();
+   				echo '<div class="currency_symbol" style="display:none;">'.$currency_symbol.'</div>';
 				?>
 				
 			<!-- Buy Batch Button -->
