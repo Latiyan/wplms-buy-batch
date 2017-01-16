@@ -13,3 +13,8 @@
 	font-size: 18px;
 	font-weight: 700;
 }
+.wplms_buy_batch_form .disabled {
+	color: #ddd !important;
+    border: solid #ddd !important;
+}
+.wplms_buy_batch_form .disabled:hover {background:#fff !important;}
