@@ -118,7 +118,6 @@ class Wplms_Buy_Batch_Actions{
 					}
 					groups_update_groupmeta( $group_id, 'enable_seats', 1 );
 					groups_update_groupmeta( $group_id, 'batch_seats',$batch_seats);
-					groups_update_groupmeta( $group_id, 'buy_batch', $buy_batch );
 					if($buy_batch){
 						groups_update_groupmeta( $group_id, 'buy_batch_course_seats', 1 );
 					}
