@@ -27,6 +27,7 @@ class Wplms_Buy_Batch_Filters{
 
 		add_filter('wplms_course_metabox',array($this,'add_price_per_batch_seat_backend'));
 		add_filter('wplms_course_creation_tabs',array($this,'add_price_per_batch_seat_frontend'));
+		add_filter('wplms_batches_settings_array',array($this,'hide_batch_course_seats_for_purchased_batch'),10,2);
 
 	} // END public function __construct
 
@@ -57,6 +58,16 @@ class Wplms_Buy_Batch_Filters{
 		array_splice($fields, (count($fields)-5), 0,$arr );
 		$settings['course_settings']['fields'] = $fields;
 	    return $settings;
+	}
+
+	function hide_batch_course_seats_for_purchased_batch($group_id,$settings){
+		$batch_course_seats = get_post_meta($group_id,'buy_batch_course_seats',true);
+		if(!empty($batch_course_seats) && $batch_course_seats == 1){
+
+			unset($settings['batch_course']);
+			unset($settings['enable_seats']);
+			unset($settings['batch_seats']);
+		}
 	}
 
 } // End of class Wplms_Buy_Batch_Filters
