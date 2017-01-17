@@ -120,7 +120,7 @@ class WPLMS_Buy_Batch_Class{
 				?>
 				
 			<!-- Buy Batch Button -->
-				<?php echo '<a class="button-primary button" id="wplms_buy_batch">'.__('Buy Batch','wplms-bb').'</a>'; ?>
+				<?php echo '<a class="button-primary button disabled" id="wplms_buy_batch">'.__('Buy Batch','wplms-bb').'</a>'; ?>
 
 				<input type="hidden" class="batch_status" data-status="<?php echo $atts['status']; ?>">
 				<input type="hidden" class="buy_batch" data-batch="<?php echo $atts['buy_batch']; ?>">

@@ -1,8 +1,5 @@
 jQuery(document).ready(function($){
 
-	// Default add class disabled on buy batch button
-      $('#wplms_buy_batch').addClass('disabled');
-
       $('.batch_seats,.batch_courses').on('change',function(){
             // Define Variables
             var batch_seats = $('.wplms_buy_batch_form').find('.batch_seats').val();
