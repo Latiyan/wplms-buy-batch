@@ -4,7 +4,7 @@ Plugin Name: WPLMS BUY BATCH
 Plugin URI: http://www.Vibethemes.com
 Description: A simple WordPress plugin to modify WPLMS template
 Version: 1.0
-Author: H.K. Latiyan
+Author: Vibethemes(H.K. Latiyan)
 Author URI: http://www.vibethemes.com
 Text Domain: wplms-bb
 License: GPL2

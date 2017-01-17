@@ -3,7 +3,7 @@
  * Initialise WPLMS Buy Batches
  *
  * @class       Wplms_Buy_Batch_Filters
- * @author      H.K. Latiyan
+ * @author      Vibethemes(H.K. Latiyan)
  * @category    Admin
  * @package     WPLMS-Buy-Batch/admin
  * @version     1.0
