@@ -23,7 +23,10 @@ class WPLMS_Buy_Batch_Class{
 	}
 
 	private function __construct(){
-		add_shortcode('wplms_buy_batch', array($this,'wplms_buy_batch_shortcode'));
+		if ( (in_array( 'wplms-batches/wplms-batches.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || (function_exists('is_plugin_active') && is_plugin_active( 'wplms-batches/wplms-batches.php'))) && (in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || (function_exists('is_plugin_active') && is_plugin_active( 'woocommerce/woocommerce.php'))) ){
+
+			add_shortcode('wplms_buy_batch', array($this,'wplms_buy_batch_shortcode'));
+		}
 
 	} // END public function __construct
 
