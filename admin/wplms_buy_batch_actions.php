@@ -24,7 +24,7 @@ class Wplms_Buy_Batch_Actions{
 	}
 
 	private function __construct(){
-
+		add_action('wp_ajax_nopriv_buy_wplms_batch',array($this,'buy_wplms_batch'));
 		add_action('wp_ajax_buy_wplms_batch',array($this,'buy_wplms_batch'));
 		add_action('woocommerce_order_status_completed',array($this,'create_batch_on_order_completion'));
 
